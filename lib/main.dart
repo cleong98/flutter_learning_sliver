@@ -46,32 +46,91 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: CustomScrollView(
         slivers: [
-          const SliverToBoxAdapter(
-            child: FlutterLogo(
-              size: 100,
+          DefaultTextStyle(
+            style: const TextStyle(fontSize: 80, color: Colors.red),
+            child: SliverPrototypeExtentList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  return LayoutBuilder(builder: (context, constraint) {
+                    print(constraint); // height 40 fix
+                    return const Text(
+                      'Hello',
+                    );
+                  });
+                },
+                childCount: 3,
+              ),
+              prototypeItem: const Text(
+                "",
+              ),
             ),
           ),
-          SliverGrid(
-            delegate: SliverChildBuilderDelegate((context, index) {
-                  return Container(
-                    height: 200,
-                    color: Colors.primaries[index % 18],
+          SliverFixedExtentList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                return LayoutBuilder(builder: (context, constraint) {
+                  print(constraint); //height 100
+                  return const FlutterLogo(
+                    size: 10000,
                   );
-                },
-              childCount: 20,
+                });
+              },
+              childCount: 2,
             ),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 4,
+            itemExtent: 100,
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                const FlutterLogo(),
+                const FlutterLogo(
+                  size: 100,
+                ),
+                const FlutterLogo(
+                  size: 200,
+                ),
+              ],
             ),
           ),
           SliverList(
-            delegate: SliverChildBuilderDelegate((context, index) {
-              return Container(
-                height: 200,
-                color: Colors.primaries[index % 18],
-              );
-            }),
-          )
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                return Container(
+                  height: 50,
+                  color: Colors.primaries[index % Colors.primaries.length],
+                );
+              },
+              childCount: 8,
+            ),
+          ),
+          SliverGrid(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                return Container(
+                  color: Colors.primaries[index % Colors.primaries.length],
+                );
+              },
+              childCount: 10,
+            ),
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 100,
+              mainAxisSpacing: 5,
+              crossAxisSpacing: 5,
+            ),
+          ),
+          SliverFillViewport(
+            delegate: SliverChildListDelegate([
+              Container(
+                color: Colors.red,
+              ),
+              Container(
+                color: Colors.blue,
+              ),
+              Container(
+                color: Colors.green,
+              ),
+            ]),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
