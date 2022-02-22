@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 void main() {
   runApp(const MyApp());
@@ -47,56 +48,57 @@ class _MyHomePageState extends State<MyHomePage> {
       body: CustomScrollView(
         slivers: [
           const SliverAppBar(
-            //title: Text('Sliver Appbar'),
-            floating: true,
-           // pinned: true,
-            //snap: true,
-            expandedHeight: 300,
-            stretch: true,
-            flexibleSpace: FlexibleSpaceBar(
-              background: FlutterLogo(),
-              title: Text('Sliver Appbar'),
-              collapseMode: CollapseMode.parallax,
-              stretchModes: [
-                StretchMode.blurBackground,
-                StretchMode.fadeTitle,
-                StretchMode.zoomBackground,
+            title: Text('Sliver App Bar'),
+          ),
+          const SliverAnimatedOpacity(
+            duration: Duration(seconds: 1),
+            opacity: 1,
+            sliver: SliverToBoxAdapter(
+              child: FlutterLogo(
+                size: 100,
+              ),
+            ),
+          ),
+          SliverGrid(
+            delegate: SliverChildListDelegate(
+              [
+                const Icon(Icons.animation),
+                const Icon(Icons.translate),
+                const Icon(Icons.save),
+                const Icon(Icons.person),
               ],
+            ),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 4,
             ),
           ),
           const SliverToBoxAdapter(
-            child: Placeholder(),
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                const FlutterLogo(
-                  size: 100,
-                ),
-                const FlutterLogo(
-                  size: 100,
-                ),
-                const FlutterLogo(
-                  size: 100,
-                ),
-                const FlutterLogo(
-                  size: 100,
-                ),
-                const FlutterLogo(
-                  size: 100,
-                ),
-                const FlutterLogo(
-                  size: 100,
-                ),
-              ],
+            child: Divider(
+              thickness: 4,
             ),
           ),
+          // fill remaining space
+          // const SliverFillRemaining(
+          //   child: Center(
+          //     child: FlutterLogo(size: 100,),
+          //   ),
+          // ),
+          SliverLayoutBuilder(
+            builder: (BuildContext context, SliverConstraints constraints) {
+              //AxisDirection is sliver direction
+              //GrowDirection is sliver item grow direction
+              //ScrollDirection is gesture direction
+              // -> you want scroll down your gesture is reverse
+              //ScrollOffset is overflow screen size
+              // remainingPaintExtent is how many space can give your render
+              print(constraints);
+              return const SliverToBoxAdapter();
+            },
+          ),
+          const SliverToBoxAdapter(
+            child: Placeholder(fallbackHeight: 2000,),
+          )
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
