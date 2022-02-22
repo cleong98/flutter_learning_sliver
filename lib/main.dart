@@ -41,95 +41,55 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      // appBar: AppBar(
+      //   title: Text(widget.title),
+      // ),
       body: CustomScrollView(
         slivers: [
-          DefaultTextStyle(
-            style: const TextStyle(fontSize: 80, color: Colors.red),
-            child: SliverPrototypeExtentList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  return LayoutBuilder(builder: (context, constraint) {
-                    print(constraint); // height 40 fix
-                    return const Text(
-                      'Hello',
-                    );
-                  });
-                },
-                childCount: 3,
-              ),
-              prototypeItem: const Text(
-                "",
-              ),
+          const SliverAppBar(
+            //title: Text('Sliver Appbar'),
+            floating: true,
+           // pinned: true,
+            //snap: true,
+            expandedHeight: 300,
+            stretch: true,
+            flexibleSpace: FlexibleSpaceBar(
+              background: FlutterLogo(),
+              title: Text('Sliver Appbar'),
+              collapseMode: CollapseMode.parallax,
+              stretchModes: [
+                StretchMode.blurBackground,
+                StretchMode.fadeTitle,
+                StretchMode.zoomBackground,
+              ],
             ),
           ),
-          SliverFixedExtentList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                return LayoutBuilder(builder: (context, constraint) {
-                  print(constraint); //height 100
-                  return const FlutterLogo(
-                    size: 10000,
-                  );
-                });
-              },
-              childCount: 2,
-            ),
-            itemExtent: 100,
+          const SliverToBoxAdapter(
+            child: Placeholder(),
           ),
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                const FlutterLogo(),
                 const FlutterLogo(
                   size: 100,
                 ),
                 const FlutterLogo(
-                  size: 200,
+                  size: 100,
+                ),
+                const FlutterLogo(
+                  size: 100,
+                ),
+                const FlutterLogo(
+                  size: 100,
+                ),
+                const FlutterLogo(
+                  size: 100,
+                ),
+                const FlutterLogo(
+                  size: 100,
                 ),
               ],
             ),
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                return Container(
-                  height: 50,
-                  color: Colors.primaries[index % Colors.primaries.length],
-                );
-              },
-              childCount: 8,
-            ),
-          ),
-          SliverGrid(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                return Container(
-                  color: Colors.primaries[index % Colors.primaries.length],
-                );
-              },
-              childCount: 10,
-            ),
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 100,
-              mainAxisSpacing: 5,
-              crossAxisSpacing: 5,
-            ),
-          ),
-          SliverFillViewport(
-            delegate: SliverChildListDelegate([
-              Container(
-                color: Colors.red,
-              ),
-              Container(
-                color: Colors.blue,
-              ),
-              Container(
-                color: Colors.green,
-              ),
-            ]),
           ),
         ],
       ),
